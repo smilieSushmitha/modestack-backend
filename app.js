@@ -35,5 +35,6 @@ app.use(cors());
 
 // Set up API Routes
 app.use("/api/v1/articles", articleRoutes);
+app.use("/api/v1/user", userRoutes);
 
 module.exports = app;

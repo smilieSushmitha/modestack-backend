@@ -11,7 +11,7 @@ const app = express();
 
 // Imports for Routes
 const articleRoutes = require("./routes/article");
-
+const userRoutes = require("./routes/user")
 // Handle MongoDB Connection
 mongoose
     .connect(mongo.localConnString, {

@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    userName: {
+    email: {
         type: String,
         required: true,
-        default: 'Modestack-blog'
+        default: 'test@gmail.com'
     },
     password: {
         type: String,
         required: true,
-        default: 'This is blog body'
+        default: 'Modestack@123'
     }
 });
 

@@ -6,8 +6,8 @@ const jwt = () => {
     return expressJwt({ secret }).unless({
         path: [
             // public routes that don't require authentication
-            '/api/v1/user',
-            '/api/v1/user/authenticate'
+            '/api/v1/user/login',
+            '/api/v1/user/register',
         ]
     });
 }

@@ -1,13 +1,7 @@
-var express = require('express');
-var path = require('path');
-//var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-// [SH] Require Passport
-var passport = require('passport');
-
-
-require('./config/passport')
+const express = require('express');
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // Import Creds
 const mongo = require("./credentials/mongo");
@@ -16,7 +10,8 @@ const mongo = require("./credentials/mongo");
 const app = express();
 
 // Imports for Routes
-var routesApi = require('./api/routes/index');
+const articleRoutes = require("./routes/article");
+const userRoutes = require("./routes/user")
 // Handle MongoDB Connection
 mongoose
     .connect(mongo.localConnString, {
@@ -29,30 +24,17 @@ mongoose
         console.log("Connection failed!");
     });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
 // Use body-parser to parse incoming reuests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-//app.use(cookieParser());
+
 // Use Cors to avoid annoying CORS Errors
 app.use(cors());
 
 // Set up API Routes
-app.use(passport.initialize());
-app.use('/api', routesApi);
-
-// [SH] Catch unauthorised errors
-app.use(function (err, req, res, next) {
-    if (err.name === 'UnauthorizedError') {
-        res.status(401);
-        res.json({
-            "message": err.name + ": " + err.message
-        });
-    }
-});
+app.use("/api/v1/articles", articleRoutes);
+app.use("/api/v1/user", userRoutes);
 
 module.exports = app;

@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+const { jwt } = require('./helpers/jwt');
+const { errorHandler } = require('./helpers/error-handler');
+
 // Import Creds
 const mongo = require("./credentials/mongo");
 
@@ -15,6 +18,7 @@ const userRoutes = require("./routes/user")
 // Handle MongoDB Connection
 mongoose
     .connect(mongo.localConnString, {
+        useUnifiedTopology: true,
         useNewUrlParser: true
     })
     .then(() => {
@@ -33,8 +37,14 @@ app.use(bodyParser.urlencoded({
 // Use Cors to avoid annoying CORS Errors
 app.use(cors());
 
+// use JWT auth to secure the api
+app.use(jwt());
+
 // Set up API Routes
 app.use("/api/v1/articles", articleRoutes);
 app.use("/api/v1/user", userRoutes);
+
+// global error handler
+app.use(errorHandler);
 
 module.exports = app;

@@ -2,20 +2,7 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var sendJSONresponse = function (res, status, content) {
-    res.status(status);
-    res.json(content);
-};
-
 module.exports.register = function (req, res) {
-
-    // if(!req.body.name || !req.body.email || !req.body.password) {
-    //   sendJSONresponse(res, 400, {
-    //     "message": "All fields required"
-    //   });
-    //   return;
-    // }
-
     var user = new User();
 
     user.name = req.body.name;
@@ -31,17 +18,9 @@ module.exports.register = function (req, res) {
             "token": token
         });
     });
-
 };
 
 module.exports.login = function (req, res) {
-
-    // if(!req.body.email || !req.body.password) {
-    //   sendJSONresponse(res, 400, {
-    //     "message": "All fields required"
-    //   });
-    //   return;
-    // }
 
     passport.authenticate('local', function (err, user, info) {
         var token;

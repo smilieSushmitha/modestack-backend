@@ -2,6 +2,13 @@ const app = require("./app");
 const debug = require("debug")("article-api");
 const http = require("http");
 
+var jwt = require('express-jwt');
+var auth = jwt({
+    secret: 'MY_SECRET',
+    userProperty: 'payload'
+});
+
+
 // Normalize Port
 const normalizePort = val => {
     var port = parseInt(val, 10);
